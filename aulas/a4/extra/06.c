@@ -17,25 +17,35 @@
 
 int get_seconds_in_month(int month)
 {
-    if (month == 0)
-        return 0;
-
-    if (month % 2 == 1)
-        return 31 * SECONDS_PER_DAY;
-
-    if (month == 2)
-        return 28 * SECONDS_PER_DAY;
-
-    return 30 * SECONDS_PER_DAY;
+    switch (month)
+    {
+        case 2:
+            return 28 * SECONDS_PER_DAY;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            return 30 * SECONDS_PER_DAY;
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            return 31 * SECONDS_PER_DAY;
+        default:
+            return 0;
+    }
 }
 
 int get_seconds_to_month(int month)
 {
     int total_seconds = 0;
 
-    for (int i = 1; i <= month; i++)
+    for (int i = 1; i < month; i++)
     {
-        total_seconds += get_seconds_in_month(month);
+        total_seconds += get_seconds_in_month(i);
     }
 
     return total_seconds;
@@ -69,18 +79,17 @@ int main()
 
     if (option == 'a')
     {
-        int seconds, minutes, hours, day, month, terrestrial_year;
+        int seconds, minutes, hours, day, month;
 
-        printf("Digite uma data terrestre na ordem (dia, mes, ano, horas, minutos e segundos): ");
-        scanf("%d %d %d %d %d %d", &day, &month, &terrestrial_year, &hours, &minutes, &seconds);
+        printf("Digite uma data terrestre na ordem (dia, mes, horas, minutos e segundos): ");
+        scanf("%d %d %d %d %d", &day, &month, &hours, &minutes, &seconds);
 
         int total_seconds = 0;
         total_seconds += seconds;
         total_seconds += minutes * SECONDS_PER_MINUTE;
         total_seconds += hours * SECONDS_PER_HOUR;
-        total_seconds += day * SECONDS_PER_DAY;
+        total_seconds += (day - 1) * SECONDS_PER_DAY;
         total_seconds += get_seconds_to_month(month);
-        total_seconds += terrestrial_year * SECONDS_PER_TERRESTRIAL_YEAR;
 
         int blip = (total_seconds % SECONDS_PER_TAK) / SECONDS_PER_BLIP;
         int tak = (total_seconds % SECONDS_PER_SALEK) / SECONDS_PER_TAK;
@@ -94,10 +103,10 @@ int main()
     }
     else if (option == 'b')
     {
-        int blip, tak, salek, mazel, brat, termopilita_year;
+        int blip, tak, salek, mazel, brat;
 
-        printf("Digite um data termopilita na ordem (ano, brat, mazel, salek, tak e blip): ");
-        scanf("%d %d %d %d %d %d", &termopilita_year, &brat, &mazel, &salek, &tak, &blip);
+        printf("Digite um data termopilita na ordem (brat, mazel, salek, tak e blip): ");
+        scanf("%d %d %d %d %d", &brat, &mazel, &salek, &tak, &blip);
 
         int total_seconds = 0;
         total_seconds += blip * SECONDS_PER_BLIP;
@@ -105,14 +114,13 @@ int main()
         total_seconds += salek * SECONDS_PER_SALEK;
         total_seconds += mazel * SECONDS_PER_MAZEL;
         total_seconds += brat * SECONDS_PER_BRAT;
-        total_seconds += termopilita_year * SECONDS_PER_TERMOPILITA_YEAR;
 
         int seconds = total_seconds % SECONDS_PER_MINUTE;
         int minutes = (total_seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
         int hours = (total_seconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR;
         int terrestrial_year = total_seconds / SECONDS_PER_TERRESTRIAL_YEAR;
         int month = get_month_by_seconds(total_seconds);
-        int day = (total_seconds % SECONDS_PER_TERRESTRIAL_YEAR - get_seconds_to_month(month)) / SECONDS_PER_DAY;
+        int day = (total_seconds % SECONDS_PER_TERRESTRIAL_YEAR - get_seconds_to_month(month)) / SECONDS_PER_DAY + 1;
 
         printf("total de segundos: %d\n", total_seconds);
         printf("ano %d, dia %d, mes %d, %d horas, %d minutos, %d segundos\n", terrestrial_year, day, month, hours, minutes, seconds);

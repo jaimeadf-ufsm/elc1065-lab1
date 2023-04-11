@@ -32,17 +32,18 @@ int main()
     if (c > second)
     {
         third = second;
-        second = c;
-    }
-
-    if (c > first)
-    {
-        third = second;
         second = first;
         first = c; 
     }
-    
 
+    if (third > second)
+    {
+        int temp = third;
+
+        third = second;
+        second = temp;
+    }
+    
     switch (i)
     {
         case 1:

@@ -99,8 +99,8 @@ int main() {
             int pontos = total / VALOR_POR_PONTO;
             double diferenca_percentual = (total - subtotal_base) / subtotal_base;
 
-            printf("\n\n");
-            printf("############### Relatorio de Compra ###############\n");
+            printf("\n");
+            printf("#################### Relatorio de Compra ####################\n");
 
             printf("Subtotal base:                     R$%.2lf\n", subtotal_base);
 
@@ -116,19 +116,17 @@ int main() {
 
             printf("Total:                             R$%.2lf\n", total);
             printf("Diferenca:                         %.2lf%%\n", diferenca_percentual * 100);
-
-            if (pontos > 0) {
-                printf("\n");
-                printf("Parabens, voce ganhou %d pontos com essa compra.\n", pontos);
-                printf("Voce pode trocar nossos pontos por: \n");
-                printf("a) Barra de cereal (2 pontos)\n");
-                printf("b) Garrafa de agua (5 pontos)\n");
-            }
+            printf("Pontuacao:                         %d ponto(s)\n", pontos);
 
             int qnt_cereal = 0, qnt_agua = 0;
             int pontos_restantes = pontos;
 
             if (pontos_restantes >= PONTOS_CEREAL) {
+                printf("\n");
+                printf("Voce pode trocar nossos pontos por: \n");
+                printf("a) Barra de cereal (2 pontos)\n");
+                printf("b) Garrafa de agua (5 pontos)\n");
+
                 int max_cereal = pontos_restantes / PONTOS_CEREAL;
 
                 printf("\nQuantas barras de cereal voce deseja (maximo %d): ", max_cereal);
@@ -152,7 +150,7 @@ int main() {
                         if (pontos_restantes >= 0) {
                             if (qnt_cereal > 0 || qnt_agua > 0) {
                                 printf("\n");
-                                printf("############### Bonus ###############\n");
+                                printf("########################### Bonus ###########################\n");
                                 
                                 if (qnt_cereal > 0) {
                                     printf("a) %d barra(s) de cereal\n", qnt_cereal);
@@ -167,7 +165,7 @@ int main() {
                                 }
                             }
 
-                            printf("\n\n");
+                            printf("\n");
                             printf("Obrigado por comprar conosco. Nos, da Rodoviaria Tux, te desejamos uma otima viagem.\n");
                         } else {
                             printf("ERRO: Voce nao possui pontos suficiente para trocar por %d garrafas de agua.\n", qnt_agua);

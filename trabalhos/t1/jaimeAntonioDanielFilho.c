@@ -77,7 +77,7 @@ int main() {
                 valor_desconto += valor_passagem * (11 / 100);
                 valor_desconto += valor_passagem * (13 / 100);
             } else if (qnt_passagens == 4) {
-                valor_desconto += subtotal_base * (15 / 100);
+                valor_desconto += 3 * valor_passagem * (15 / 100);
             } else if (qnt_passagens >= 5) {
                 valor_desconto += subtotal_base * (16 / 100);
             }

@@ -114,7 +114,7 @@ int main() {
             if (pontos > 0) {
                 printf("\n");
                 printf("Parabens, voce ganhou %d pontos com essa compra.\n", pontos);
-                printf("Com os nossos pontos, voce pode gastar em: \n");
+                printf("Voce pode trocar nossos pontos por: \n");
                 printf("a) Barra de cereal (2 pontos)\n");
                 printf("b) Garrafa de agua (5 pontos)\n");
             }

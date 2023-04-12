@@ -7,7 +7,7 @@ int main() {
     const double VALOR_FRONTEIRA = 259.41;
     const double VALOR_INTERESTADUAL = 368.92;
 
-    const double PERCENTUAL_SEGURO = 2.16 / 100;
+    const double PERCENTUAL_SEGURO = 2.16 / 100.0;
     const double TAXA_EMISSAO_VOLTA = 1.50;
 
     const double VALOR_POR_PONTO = 120.0;
@@ -78,14 +78,14 @@ int main() {
             }
 
             if (qnt_passagens == 2) {
-                valor_desconto += valor_passagem * (9 / 100);
+                valor_desconto += valor_passagem * (9.0 / 100.0);
             } else if (qnt_passagens == 3) {
-                valor_desconto += valor_passagem * (11 / 100);
-                valor_desconto += valor_passagem * (13 / 100);
+                valor_desconto += valor_passagem * (11.0 / 100.0);
+                valor_desconto += valor_passagem * (13.0 / 100.0);
             } else if (qnt_passagens == 4) {
-                valor_desconto += 3 * valor_passagem * (15 / 100);
+                valor_desconto += 3 * valor_passagem * (15.0 / 100.0);
             } else if (qnt_passagens >= 5) {
-                valor_desconto += subtotal_base * (16 / 100);
+                valor_desconto += subtotal_base * (16.0 / 100.0);
             }
 
             double subtotal_com_desconto = subtotal_base - valor_desconto;
@@ -115,7 +115,7 @@ int main() {
             }
 
             printf("Total:                             R$%.2lf\n", total);
-            printf("Diferenca:                         %.2lf%%\n", diferenca_percentual* 100);
+            printf("Diferenca:                         %.2lf%%\n", diferenca_percentual * 100);
 
             if (pontos > 0) {
                 printf("\n");

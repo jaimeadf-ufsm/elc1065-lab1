@@ -132,37 +132,45 @@ int main() {
             if (qnt_cereal >= 0) {
                 pontos_restantes -= qnt_cereal * PONTOS_CEREAL;
 
-                if (pontos_restantes >= PONTOS_AGUA) {
-                    int max_agua = pontos_restantes / PONTOS_AGUA;
+                if (pontos_restantes >= 0) {
+                    if (pontos_restantes >= PONTOS_AGUA) {
+                        int max_agua = pontos_restantes / PONTOS_AGUA;
 
-                    printf("Quantas garrafas de agua voce deseja (maximo %d): ", max_agua);
-                    scanf("%d", &qnt_agua);
-                }
-
-                if (qnt_agua >= 0) {
-                    pontos_restantes -= qnt_agua * PONTOS_AGUA;
-
-                    if (qnt_cereal > 0 || qnt_agua > 0) {
-                        printf("\n");
-                        printf("############### Bonus ###############\n");
-                        
-                        if (qnt_cereal > 0) {
-                            printf("a) %d barra(s) de cereal\n", qnt_cereal);
-                        }
-
-                        if (qnt_agua > 0) {
-                            printf("b) %d garrafa(s) de agua\n", qnt_agua);
-                        }
-
-                        if (pontos_restantes > 0) {
-                            printf("OBS: Voce ainda possui %d ponto(s) para gastar em compras futuras.\n", pontos_restantes);
-                        }
+                        printf("Quantas garrafas de agua voce deseja (maximo %d): ", max_agua);
+                        scanf("%d", &qnt_agua);
                     }
 
-                    printf("\n\n");
-                    printf("Obrigado por comprar conosco. Nos, da Rodoviaria Tux, te desejamos uma otima viagem.\n");
+                    if (qnt_agua >= 0) {
+                        pontos_restantes -= qnt_agua * PONTOS_AGUA;
+
+                        if (pontos_restantes >= 0) {
+                            if (qnt_cereal > 0 || qnt_agua > 0) {
+                                printf("\n");
+                                printf("############### Bonus ###############\n");
+                                
+                                if (qnt_cereal > 0) {
+                                    printf("a) %d barra(s) de cereal\n", qnt_cereal);
+                                }
+
+                                if (qnt_agua > 0) {
+                                    printf("b) %d garrafa(s) de agua\n", qnt_agua);
+                                }
+
+                                if (pontos_restantes > 0) {
+                                    printf("OBS: Voce ainda possui %d ponto(s) para gastar em compras futuras.\n", pontos_restantes);
+                                }
+                            }
+
+                            printf("\n\n");
+                            printf("Obrigado por comprar conosco. Nos, da Rodoviaria Tux, te desejamos uma otima viagem.\n");
+                        } else {
+                            printf("ERRO: Voce nao possui pontos suficiente para trocar por %d garrafa(s) de agua\n", qnt_agua);
+                        }
+                    } else {
+                        printf("ERRO: A quantidade de garrafas de agua precisa maior ou igual a 0.\n");
+                    }
                 } else {
-                    printf("ERRO: A quantidade de garrafas de agua precisa maior ou igual a 0.\n");
+                    printf("ERRO: Voce nao possui pontos suficiente para trocar por %d barra(s) de cereal\n", qnt_cereal);
                 }
             } else {
                 printf("ERRO: A quantidade de barras de cereais precisa maior ou igual a 0.\n");

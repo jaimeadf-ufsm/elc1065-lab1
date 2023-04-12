@@ -25,8 +25,15 @@ int main() {
     printf("3) Serra         - R$%.2lf\n", VALOR_SERRA);
     printf("4) Fronteira     - R$%.2lf\n", VALOR_FRONTEIRA);
     printf("5) Interestadual - R$%.2lf\n", VALOR_INTERESTADUAL);
+    printf("\n");
+    printf("Nossos combos: \n");
+    printf("2 passagens:          9%% de desconto no valor da segunda.\n");
+    printf("3 passagens:         11%% de desconto no valor da segunda e 13%% da terceira.\n");
+    printf("4 passagens:         15%% de desconto nas tres ultimas passagens.\n");
+    printf("5 passagens ou mais: 16%% de desconto no valor base da compra.\n");
 
-    printf("\nQuantas passagens voce deseja comprar? ");
+    printf("\n");
+    printf("Quantas passagens voce deseja comprar? ");
     scanf("%d", &qnt_passagens);
 
     if (qnt_passagens > 0) {
@@ -65,7 +72,6 @@ int main() {
 
             printf("Voce deseja comprar tambem passagens de volta (s/n)? ");
             scanf(" %c", &incluir_volta);
-
 
             if (incluir_seguro == 's' || incluir_seguro == 'S') {
                 valor_seguro += subtotal_base * PERCENTUAL_SEGURO;
@@ -164,13 +170,13 @@ int main() {
                             printf("\n\n");
                             printf("Obrigado por comprar conosco. Nos, da Rodoviaria Tux, te desejamos uma otima viagem.\n");
                         } else {
-                            printf("ERRO: Voce nao possui pontos suficiente para trocar por %d garrafa(s) de agua\n", qnt_agua);
+                            printf("ERRO: Voce nao possui pontos suficiente para trocar por %d garrafas de agua.\n", qnt_agua);
                         }
                     } else {
                         printf("ERRO: A quantidade de garrafas de agua precisa maior ou igual a 0.\n");
                     }
                 } else {
-                    printf("ERRO: Voce nao possui pontos suficiente para trocar por %d barra(s) de cereal\n", qnt_cereal);
+                    printf("ERRO: Voce nao possui pontos suficiente para trocar por %d barras de cereal.\n", qnt_cereal);
                 }
             } else {
                 printf("ERRO: A quantidade de barras de cereais precisa maior ou igual a 0.\n");

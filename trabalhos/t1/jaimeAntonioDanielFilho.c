@@ -61,17 +61,21 @@ int main() {
                     break;
             }
 
-            char incluir_seguro, incluir_volta;
-
-            double valor_compra_base = qnt_passagens * valor_passagem;
-            double valor_seguro = 0.0;
-            double valor_desconto = 0.0;
+            char incluir_volta, incluir_seguro;
+            double valor_emissao = 0.0, valor_seguro = 0.0, valor_desconto = 0.0;
 
             printf("Voce deseja incluir o seguro de vida (s/n)? ");
             scanf(" %c", &incluir_seguro);
 
             printf("Voce deseja comprar tambem passagens de volta (s/n)? ");
             scanf(" %c", &incluir_volta);
+
+            if (incluir_volta == 's' || incluir_volta == 'S') {
+                valor_emissao += qnt_passagens * TAXA_EMISSAO_VOLTA;
+                qnt_passagens *= 2;
+            }
+
+            double valor_compra_base = qnt_passagens * valor_passagem;
 
             if (incluir_seguro == 's' || incluir_seguro == 'S') {
                 valor_seguro += qnt_passagens * (valor_passagem * PERCENTUAL_SEGURO);
@@ -92,6 +96,11 @@ int main() {
             double valor_compra_com_desconto = valor_compra_base - valor_desconto;
             double valor_compra_com_seguro = valor_compra_base + valor_seguro;
 
+            double valor_compra_final = valor_compra + valor_emissao;
+            double diferenca = (valor_compra_final - valor_compra_base) / valor_compra_base;
+
+            int pontos = valor_compra_final / 120;
+
             printf("\n");
             printf("######################### Relatorio de Compra #########################\n");
 
@@ -110,32 +119,20 @@ int main() {
 
             printf("\n");
 
-            double valor_compra_inicial;
-            double valor_compra_final;
-
-            if (incluir_volta == 's' || incluir_volta == 'S') {
-                valor_compra_inicial = 2 * valor_compra_base;
-                valor_compra_final = 2 * valor_compra + qnt_passagens * TAXA_EMISSAO_VOLTA;
-            
-                printf("Valor final (ida e volta):          R$%.2lf (2 * %.2lf + taxas)\n", valor_compra_final, valor_compra);
+            if (valor_emissao > 0) {
+                printf("Valor final:                        R$%.2lf (%.2lf + emissao)\n", valor_compra_final, valor_compra);
             } else {
-                valor_compra_inicial = valor_compra_base;
-                valor_compra_final = valor_compra;
-
                 printf("Valor final:                        R$%.2lf\n", valor_compra_final);
             }
-
-            int pontos = valor_compra_final / 120;
-            double diferenca = (valor_compra_final - valor_compra_inicial) / valor_compra_inicial;
 
             printf("Pontuacao:                          %d ponto(s)\n", pontos);
 
             if (diferenca > 0) {
-                printf("-> Voce gastou %.2lf%% a mais que o valor inicial.\n", diferenca * 100);
+                printf("-> Voce gastou %.2lf%% a mais que o valor base.\n", diferenca * 100);
             } else if (diferenca < 0) {
-                printf("-> Voce gastou %.2lf%% a menos que o valor inicial.\n", -diferenca * 100);
+                printf("-> Voce gastou %.2lf%% a menos que o valor base.\n", -diferenca * 100);
             } else {
-                printf("-> Voce gastou o mesmo que o valor inicial.\n");
+                printf("-> Voce gastou o mesmo que o valor base.\n");
             }
 
             int qnt_cereal = 0, qnt_agua = 0;

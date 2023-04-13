@@ -74,7 +74,6 @@ int main() {
             bool incluir_seguro = resposta_seguro == 's' || resposta_seguro == 'S';
             bool incluir_volta = resposta_volta == 's' || resposta_volta == 'S';
 
-
             if (incluir_volta) {
                 valor_emissao += qtd_passagens * TAXA_EMISSAO_VOLTA;
                 qtd_passagens *= 2;

@@ -18,7 +18,6 @@ void square_area()
     display_result(side * side);
 }
 
-
 void rectangle_area()
 {
     double width, height;

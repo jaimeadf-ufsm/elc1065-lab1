@@ -1,0 +1,32 @@
+# Logica Opcao
+## Marcar uma posicao na tabela
+- Se formar MAX e nao estiver marcado
+- Se formar DOUBLE e nao estiver marcado
+- Se formar RANK e nao estiver marcado
+- Se forem iguais a 6, MAX estiver marcado e FREE ainda nao estiver marcado
+
+## Separar um dos dados e jogar o outro
+- Se um for igual a 6 e MAX nao estiver marcado, jogar novamente o outro (objetivo: tentar atingir MAX)
+- Se um for igual a 1 ou a 6 e o outro for diferente de 1 e de 6, jogar o primeiro novamente (objetivo: tentar atingir RANK ou DOUBLE)
+- Se forem diferentes de 1 e diferentes de 6, jogar o menor deles novamente (objetivo: tentar atingir RANK ou DOUBLE)
+
+
+## Jogar novamente os dois dados
+- Se forem iguais a 1
+- Se forem iguais a 6 e MAX e FREE estiverem marcados
+
+# Logica Marcacao
+## MAX
+- Se formar MAX
+- Se FREE estiver marcado
+
+## DOUBLE
+- Se formar DOUBLE
+- Se MAX e FREE estiverem marcados
+
+## RANK
+- Se formar RANK
+- Se MAX, DOUBLE e FREE estiverem marcados
+
+## FREE
+- Se apenas formar FREE

@@ -226,38 +226,71 @@ void ImprimirTabelaFinal(int linha, int jogador_final, int computador_final)
     }
 }
 
-void MostrarResumoDaPartida(
-    int partida,
-    int jogador_final, int computador_final,
-    int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int computador_free, int computador_rank, int computador_double, int computador_max
-)
+void MostrarTitulo()
 {
-    printf("Resumo da Partida");
-    printf("                                                         ");
-    printf("Partida %d", partida);
-    printf("\n"); 
+    printf("================================= Melhor Soma de 3 ================================\n");
+}
 
-    for (int linha = 0; linha < 11; linha++)
-    {
-        ImprimirTabelaDaPartida(
-            linha,
-            jogador_free,
-            jogador_rank,
-            jogador_double,
-            jogador_max,
-            computador_free,
-            computador_rank,
-            computador_double,
-            computador_max
-        );
+void MostrarVitoria()
+{
+    printf("\n");
+    printf(" /$$    /$$\n");
+    printf("| $$   | $$\n");
+    printf("| $$   | $$  /$$$$$$   /$$$$$$$  /$$$$$$\n");
+    printf("|  $$ / $$/ /$$__  $$ /$$_____/ /$$__  $$\n");
+    printf(" \\  $$ $$/ | $$  \\ $$| $$      | $$$$$$$$\n");
+    printf("  \\  $$$/  | $$  | $$| $$      | $$_____/\n");
+    printf("   \\  $/   |  $$$$$$/|  $$$$$$$|  $$$$$$$\n");
+    printf("    \\_/     \\______/  \\_______/ \\_______/\n");
+    printf("\n");
+    printf("  /$$$$$$                      /$$                                     /$$$$$$$\n");
+    printf(" /$$__  $$                    | $$                                    | $$__  $$\n");
+    printf("| $$  \\__/  /$$$$$$  /$$$$$$$ | $$$$$$$   /$$$$$$  /$$   /$$       /$$| $$  \\ $$\n");
+    printf("| $$ /$$$$ |____  $$| $$__  $$| $$__  $$ /$$__  $$| $$  | $$      |__/| $$  | $$\n");
+    printf("| $$|_  $$  /$$$$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$| $$  | $$          | $$  | $$\n");
+    printf("| $$  \\ $$ /$$__  $$| $$  | $$| $$  | $$| $$  | $$| $$  | $$       /$$| $$  | $$\n");
+    printf("|  $$$$$$/|  $$$$$$$| $$  | $$| $$  | $$|  $$$$$$/|  $$$$$$/      |__/| $$$$$$$/\n");
+    printf(" \\______/  \\_______/|__/  |__/|__/  |__/ \\______/  \\______/           |_______/\n");
+}
 
-        printf("           ");
+void MostrarDerrota()
+{
+    printf("\n");
+    printf(" /$$    /$$\n");
+    printf("| $$   | $$\n");
+    printf("| $$   | $$  /$$$$$$   /$$$$$$$  /$$$$$$\n");
+    printf("|  $$ / $$/ /$$__  $$ /$$_____/ /$$__  $$\n");
+    printf(" \\  $$ $$/ | $$  \\ $$| $$      | $$$$$$$$\n");
+    printf("  \\  $$$/  | $$  | $$| $$      | $$_____/\n");
+    printf("   \\  $/   |  $$$$$$/|  $$$$$$$|  $$$$$$$\n");
+    printf("    \\_/     \\______/  \\_______/ \\_______/\n");
+    printf("\n");
+    printf(" /$$$$$$$                            /$$                                 /$$$\n");
+    printf("| $$__  $$                          | $$                                /$$_/\n");
+    printf("| $$  \\ $$  /$$$$$$   /$$$$$$   /$$$$$$$  /$$$$$$  /$$   /$$       /$$ /$$/\n");
+    printf("| $$$$$$$/ /$$__  $$ /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$      |__/| $$\n");
+    printf("| $$____/ | $$$$$$$$| $$  \\__/| $$  | $$| $$$$$$$$| $$  | $$          | $$\n");
+    printf("| $$      | $$_____/| $$      | $$  | $$| $$_____/| $$  | $$       /$$|  $$\n");
+    printf("| $$      |  $$$$$$$| $$      |  $$$$$$$|  $$$$$$$|  $$$$$$/      |__/ \\  $$$\n");
+    printf("|__/       \\_______/|__/       \\_______/ \\_______/ \\______/             \\___/\n");   
+    printf("\n");
+}
 
-        ImprimirTabelaFinal(linha, jogador_final, computador_final);
-
-        printf("\n");
-    } 
+void MostrarEmpate()
+{
+    printf("\n");
+    printf(" /$$$$$$$$                                     /$$\n");
+    printf("| $$_____/                                    | $$\n");
+    printf("| $$       /$$$$$$/$$$$   /$$$$$$   /$$$$$$  /$$$$$$    /$$$$$$\n");
+    printf("| $$$$$   | $$_  $$_  $$ /$$__  $$ |____  $$|_  $$_/   /$$__  $$\n");
+    printf("| $$__/   | $$ \\ $$ \\ $$| $$  \\ $$  /$$$$$$$  | $$    | $$$$$$$$\n");
+    printf("| $$      | $$ | $$ | $$| $$  | $$ /$$__  $$  | $$ /$$| $$_____/\n");
+    printf("| $$$$$$$$| $$ | $$ | $$| $$$$$$$/|  $$$$$$$  |  $$$$/|  $$$$$$$\n");
+    printf("|________/|__/ |__/ |__/| $$____/  \\_______/   \\___/   \\_______/\n");
+    printf("                        | $$\n");
+    printf("                        | $$\n");
+    printf("                        |__/\n");
+    printf("\n");
 }
 
 void MostrarDadosComTabelaDaPartida(
@@ -300,74 +333,6 @@ void MostrarTabelaFinal(int jogador_final, int computador_final)
     } 
 }
 
-void MostrarVitoria()
-{
-    printf(" /$$$$$$$                                /$$                                     /$$\n");
-    printf("| $$__  $$                              | $$                                    | $$\n");
-    printf("| $$  \\ $$  /$$$$$$   /$$$$$$   /$$$$$$ | $$$$$$$   /$$$$$$  /$$$$$$$   /$$$$$$$| $$\n");
-    printf("| $$$$$$$/ |____  $$ /$$__  $$ |____  $$| $$__  $$ /$$__  $$| $$__  $$ /$$_____/| $$\n");
-    printf("| $$____/   /$$$$$$$| $$  \\__/  /$$$$$$$| $$  \\ $$| $$$$$$$$| $$  \\ $$|  $$$$$$ |__/\n");
-    printf("| $$       /$$__  $$| $$       /$$__  $$| $$  | $$| $$_____/| $$  | $$ \\____  $$\n");
-    printf("| $$      |  $$$$$$$| $$      |  $$$$$$$| $$$$$$$/|  $$$$$$$| $$  | $$ /$$$$$$$/ /$$\n");
-    printf("|__/       \\_______/|__/       \\_______/|_______/  \\_______/|__/  |__/|_______/ |__/\n");
-    printf("\n");
-    printf("\n");
-    printf("\n");
-    printf(" /$$    /$$\n");
-    printf("| $$   | $$\n");
-    printf("| $$   | $$  /$$$$$$   /$$$$$$$  /$$$$$$\n");
-    printf("|  $$ / $$/ /$$__  $$ /$$_____/ /$$__  $$\n");
-    printf(" \\  $$ $$/ | $$  \\ $$| $$      | $$$$$$$$\n");
-    printf("  \\  $$$/  | $$  | $$| $$      | $$_____/\n");
-    printf("   \\  $/   |  $$$$$$/|  $$$$$$$|  $$$$$$$\n");
-    printf("    \\_/     \\______/  \\_______/ \\_______/\n");
-    printf("\n");
-    printf("  /$$$$$$                      /$$                                     /$$$$$$$\n");
-    printf(" /$$__  $$                    | $$                                    | $$__  $$\n");
-    printf("| $$  \\__/  /$$$$$$  /$$$$$$$ | $$$$$$$   /$$$$$$  /$$   /$$       /$$| $$  \\ $$\n");
-    printf("| $$ /$$$$ |____  $$| $$__  $$| $$__  $$ /$$__  $$| $$  | $$      |__/| $$  | $$\n");
-    printf("| $$|_  $$  /$$$$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$| $$  | $$          | $$  | $$\n");
-    printf("| $$  \\ $$ /$$__  $$| $$  | $$| $$  | $$| $$  | $$| $$  | $$       /$$| $$  | $$\n");
-    printf("|  $$$$$$/|  $$$$$$$| $$  | $$| $$  | $$|  $$$$$$/|  $$$$$$/      |__/| $$$$$$$/\n");
-    printf(" \\______/  \\_______/|__/  |__/|__/  |__/ \\______/  \\______/           |_______/\n");
-}
-
-void MostrarDerrota()
-{
-    printf(" /$$    /$$\n");
-    printf("| $$   | $$\n");
-    printf("| $$   | $$  /$$$$$$   /$$$$$$$  /$$$$$$\n");
-    printf("|  $$ / $$/ /$$__  $$ /$$_____/ /$$__  $$\n");
-    printf(" \\  $$ $$/ | $$  \\ $$| $$      | $$$$$$$$\n");
-    printf("  \\  $$$/  | $$  | $$| $$      | $$_____/\n");
-    printf("   \\  $/   |  $$$$$$/|  $$$$$$$|  $$$$$$$\n");
-    printf("    \\_/     \\______/  \\_______/ \\_______/\n");
-    printf("\n");
-    printf(" /$$$$$$$                            /$$                                 /$$$\n");
-    printf("| $$__  $$                          | $$                                /$$_/\n");
-    printf("| $$  \\ $$  /$$$$$$   /$$$$$$   /$$$$$$$  /$$$$$$  /$$   /$$       /$$ /$$/\n");
-    printf("| $$$$$$$/ /$$__  $$ /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$      |__/| $$\n");
-    printf("| $$____/ | $$$$$$$$| $$  \\__/| $$  | $$| $$$$$$$$| $$  | $$          | $$\n");
-    printf("| $$      | $$_____/| $$      | $$  | $$| $$_____/| $$  | $$       /$$|  $$\n");
-    printf("| $$      |  $$$$$$$| $$      |  $$$$$$$|  $$$$$$$|  $$$$$$/      |__/ \\  $$$\n");
-    printf("|__/       \\_______/|__/       \\_______/ \\_______/ \\______/             \\___/\n");   
-}
-
-void MostrarEmpate()
-{
-    printf(" /$$$$$$$$                                     /$$\n");
-    printf("| $$_____/                                    | $$\n");
-    printf("| $$       /$$$$$$/$$$$   /$$$$$$   /$$$$$$  /$$$$$$    /$$$$$$\n");
-    printf("| $$$$$   | $$_  $$_  $$ /$$__  $$ |____  $$|_  $$_/   /$$__  $$\n");
-    printf("| $$__/   | $$ \\ $$ \\ $$| $$  \\ $$  /$$$$$$$  | $$    | $$$$$$$$\n");
-    printf("| $$      | $$ | $$ | $$| $$  | $$ /$$__  $$  | $$ /$$| $$_____/\n");
-    printf("| $$$$$$$$| $$ | $$ | $$| $$$$$$$/|  $$$$$$$  |  $$$$/|  $$$$$$$\n");
-    printf("|________/|__/ |__/ |__/| $$____/  \\_______/   \\___/   \\_______/\n");
-    printf("                        | $$\n");
-    printf("                        | $$\n");
-    printf("                        |__/\n");
-}
-
 void MostrarCabecalhoJogador(
     int partida, int rodada,
     int dado_a, int dado_b,
@@ -375,6 +340,8 @@ void MostrarCabecalhoJogador(
     int computador_free, int computador_rank, int computador_double, int computador_max
 )
 {
+    MostrarTitulo();
+
     printf("Sua vez");
     printf("                                                          ");
     printf("Partida %d Rodada %d", partida, rodada);
@@ -401,6 +368,8 @@ void MostrarCabecalhoComputador(
     int computador_free, int computador_rank, int computador_double, int computador_max
 )
 {
+    MostrarTitulo();
+
     printf("Computador");
     printf("                                                       ");
     printf("Partida %d Rodada %d", partida, rodada);
@@ -418,6 +387,59 @@ void MostrarCabecalhoComputador(
         computador_double,
         computador_max  
     );
+}
+
+void MostrarResumoDaPartida(
+    int partida,
+    int jogador_final, int computador_final,
+    int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
+    int computador_free, int computador_rank, int computador_double, int computador_max
+)
+{
+    MostrarTitulo();
+
+    printf("Resumo da Partida");
+    printf("                                                         ");
+    printf("Partida %d", partida);
+    printf("\n"); 
+
+    for (int linha = 0; linha < 11; linha++)
+    {
+        ImprimirTabelaDaPartida(
+            linha,
+            jogador_free,
+            jogador_rank,
+            jogador_double,
+            jogador_max,
+            computador_free,
+            computador_rank,
+            computador_double,
+            computador_max
+        );
+
+        printf("           ");
+        ImprimirTabelaFinal(linha, jogador_final, computador_final);
+        printf("\n");
+    } 
+}
+
+void MostrarTelaFinal(int jogador_final, int computador_final)
+{
+    MostrarTitulo();
+    MostrarTabelaFinal(jogador_final, computador_final);
+
+    if (jogador_final > computador_final)
+    {
+        MostrarVitoria();
+    }
+    else if (computador_final > jogador_final)
+    {
+        MostrarDerrota();
+    }
+    else
+    {
+        MostrarEmpate();
+    }
 }
 
 void MostrarOpcoes(int dado_a, int dado_b)
@@ -533,6 +555,14 @@ char PerguntarDadoParaRejogar()
     return tolower(letra);
 }
 
+void EsperarPorEntrada()
+{
+    char letra;
+
+    printf("Aperte ENTER para continuar...");
+    getchar();
+}
+
 char AvaliarMelhorOpcao(
     int dado_a, int dado_b,
     int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max
@@ -643,12 +673,6 @@ char AvaliarMelhorPosicao(
     }
 
     return POSICAO_RANK;
-}
-
-void EsperarPorEntrada()
-{
-    printf("Aperte ENTER para continuar...");
-    getchar();
 }
 
 void MaiorSomaDe3()
@@ -907,20 +931,7 @@ void MaiorSomaDe3()
     }
 
     Limpar();
-    MostrarTabelaFinal(jogador_final, computador_final);
-
-    if (jogador_final > computador_final)
-    {
-        MostrarVitoria();
-    }
-    else if (computador_final > jogador_final)
-    {
-        MostrarDerrota();
-    }
-    else
-    {
-        MostrarEmpate();
-    }
+    MostrarTelaFinal(jogador_final, computador_final);
 
     EsperarPorEntrada();
 }

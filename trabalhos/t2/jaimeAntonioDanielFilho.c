@@ -18,7 +18,7 @@
 
 void Limpar()
 {
-    system("clear");
+    system("clear || cls");
 }
 
 int JogarDado()

@@ -31,6 +31,7 @@ bool EstaMarcada(int modalidade)
     return modalidade != -1;
 }
 
+// Caso as regras do jogo mudem
 bool FormarFree(int dado_a, int dado_b)
 {
     return true;
@@ -76,7 +77,8 @@ int CalcularPontosMax(int rodada, int dado_a, int dado_b)
     return FormarMax(dado_a, dado_b) ? 50 + CalcularBonus(rodada) : 0;
 }
 
-int CalcularPontuacaoTotal(int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max)
+int CalcularPontuacaoTotal(
+    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max)
 {
     int total = 0;
 
@@ -103,20 +105,43 @@ int CalcularPontuacaoTotal(int modalidade_free, int modalidade_rank, int modalid
     return total;
 }
 
+bool VerificarPosicao(
+    char posicao,
+    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max)
+{
+    switch (posicao)
+    {
+    case POSICAO_FREE:
+        return EstaMarcada(modalidade_free);
+        break;
+    case POSICAO_RANK:
+        return EstaMarcada(modalidade_rank);
+        break;
+    case POSICAO_DOUBLE:
+        return EstaMarcada(modalidade_double);
+        break;
+    case POSICAO_MAX:
+        return EstaMarcada(modalidade_max);
+        break;
+    default:
+        return false;
+        break;
+    }
+}
+
 void ImprimirDado(int linha, int dado)
 {
     if (linha == 0 || linha == 4)
     {
         printf("+-------+");
-    } 
+    }
     else if (linha < 5)
     {
         printf("| ");
 
         if (
             dado == 6 ||
-            (linha == 1 || linha == 3) && (dado == 4 || dado == 5)
-        )
+            (linha == 1 || linha == 3) && (dado == 4 || dado == 5))
         {
             printf("O   O");
         }
@@ -145,7 +170,7 @@ void ImprimirDado(int linha, int dado)
     }
 }
 
-void ImprimirPontuacaoTabela(int modalidade)
+void ImprimirColunaPontuacao(int modalidade)
 {
     printf(EstaMarcada(modalidade) ? " %10d " : "          ? ", modalidade);
     printf("|");
@@ -154,57 +179,54 @@ void ImprimirPontuacaoTabela(int modalidade)
 void ImprimirTabelaDaPartida(
     int linha,
     int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int computador_free, int computador_rank, int computador_double, int computador_max
-)
+    int computador_free, int computador_rank, int computador_double, int computador_max)
 {
     int jogador_total = CalcularPontuacaoTotal(
         jogador_free,
         jogador_rank,
         jogador_double,
-        jogador_max
-    );
+        jogador_max);
     int computador_total = CalcularPontuacaoTotal(
         computador_free,
         computador_rank,
         computador_double,
-        computador_max
-    );
+        computador_max);
 
     switch (linha)
     {
-        case 0:
-        case 2:
-        case 7:
-        case 9:
-            printf("+--------+------------+------------+");
-            break;
-        case 1:
-            printf("|        |    Voce    | Computador |");
-            break;
-        case 3:
-            printf("| Free   |");
-            ImprimirPontuacaoTabela(jogador_free);
-            ImprimirPontuacaoTabela(computador_free);
-            break;
-        case 4:
-            printf("| Rank   |");
-            ImprimirPontuacaoTabela(jogador_rank);
-            ImprimirPontuacaoTabela(computador_rank);
-            break;
-        case 5:
-            printf("| Double |");
-            ImprimirPontuacaoTabela(jogador_double);
-            ImprimirPontuacaoTabela(computador_double);
-            break;
-        case 6:
-            printf("| Max    |");
-            ImprimirPontuacaoTabela(jogador_max);
-            ImprimirPontuacaoTabela(computador_max);
-            break;
-        case 8:
-            printf("| Total  |");
-            ImprimirPontuacaoTabela(jogador_total);
-            ImprimirPontuacaoTabela(computador_total);
+    case 0:
+    case 2:
+    case 7:
+    case 9:
+        printf("+--------+------------+------------+");
+        break;
+    case 1:
+        printf("|        |    Voce    | Computador |");
+        break;
+    case 3:
+        printf("| Free   |");
+        ImprimirColunaPontuacao(jogador_free);
+        ImprimirColunaPontuacao(computador_free);
+        break;
+    case 4:
+        printf("| Rank   |");
+        ImprimirColunaPontuacao(jogador_rank);
+        ImprimirColunaPontuacao(computador_rank);
+        break;
+    case 5:
+        printf("| Double |");
+        ImprimirColunaPontuacao(jogador_double);
+        ImprimirColunaPontuacao(computador_double);
+        break;
+    case 6:
+        printf("| Max    |");
+        ImprimirColunaPontuacao(jogador_max);
+        ImprimirColunaPontuacao(computador_max);
+        break;
+    case 8:
+        printf("| Total  |");
+        ImprimirColunaPontuacao(jogador_total);
+        ImprimirColunaPontuacao(computador_total);
     }
 }
 
@@ -212,17 +234,17 @@ void ImprimirTabelaFinal(int linha, int jogador_final, int computador_final)
 {
     switch (linha)
     {
-        case 0:
-        case 2:
-        case 4:
-            printf("+--------+------------+------------+");
-            break;
-        case 1:
-            printf("|        |    Voce    | Computador |");
-            break;
-        case 3:
-            printf("| Final  | %10d | %10d |", jogador_final, computador_final);
-            break;
+    case 0:
+    case 2:
+    case 4:
+        printf("+--------+------------+------------+");
+        break;
+    case 1:
+        printf("|        |    Voce    | Computador |");
+        break;
+    case 3:
+        printf("| Final  | %10d | %10d |", jogador_final, computador_final);
+        break;
     }
 }
 
@@ -272,7 +294,7 @@ void MostrarDerrota()
     printf("| $$____/ | $$$$$$$$| $$  \\__/| $$  | $$| $$$$$$$$| $$  | $$          | $$\n");
     printf("| $$      | $$_____/| $$      | $$  | $$| $$_____/| $$  | $$       /$$|  $$\n");
     printf("| $$      |  $$$$$$$| $$      |  $$$$$$$|  $$$$$$$|  $$$$$$/      |__/ \\  $$$\n");
-    printf("|__/       \\_______/|__/       \\_______/ \\_______/ \\______/             \\___/\n");   
+    printf("|__/       \\_______/|__/       \\_______/ \\_______/ \\______/             \\___/\n");
     printf("\n");
 }
 
@@ -296,8 +318,7 @@ void MostrarEmpate()
 void MostrarDadosComTabelaDaPartida(
     int dado_a, int dado_b,
     int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int computador_free, int computador_rank, int computador_double, int computador_max
-)
+    int computador_free, int computador_rank, int computador_double, int computador_max)
 {
     for (int linha = 0; linha < 11; linha++)
     {
@@ -330,15 +351,14 @@ void MostrarTabelaFinal(int jogador_final, int computador_final)
     {
         ImprimirTabelaFinal(linha, jogador_final, computador_final);
         printf("\n");
-    } 
+    }
 }
 
 void MostrarCabecalhoJogador(
     int partida, int rodada,
     int dado_a, int dado_b,
     int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int computador_free, int computador_rank, int computador_double, int computador_max
-)
+    int computador_free, int computador_rank, int computador_double, int computador_max)
 {
     MostrarTitulo();
 
@@ -357,16 +377,14 @@ void MostrarCabecalhoJogador(
         computador_free,
         computador_rank,
         computador_double,
-        computador_max  
-    );
+        computador_max);
 }
 
 void MostrarCabecalhoComputador(
     int partida, int rodada,
     int dado_a, int dado_b,
     int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int computador_free, int computador_rank, int computador_double, int computador_max
-)
+    int computador_free, int computador_rank, int computador_double, int computador_max)
 {
     MostrarTitulo();
 
@@ -385,23 +403,21 @@ void MostrarCabecalhoComputador(
         computador_free,
         computador_rank,
         computador_double,
-        computador_max  
-    );
+        computador_max);
 }
 
 void MostrarResumoDaPartida(
     int partida,
     int jogador_final, int computador_final,
     int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int computador_free, int computador_rank, int computador_double, int computador_max
-)
+    int computador_free, int computador_rank, int computador_double, int computador_max)
 {
     MostrarTitulo();
 
     printf("Resumo da Partida");
     printf("                                                         ");
     printf("Partida %d", partida);
-    printf("\n"); 
+    printf("\n");
 
     for (int linha = 0; linha < 11; linha++)
     {
@@ -414,13 +430,12 @@ void MostrarResumoDaPartida(
             computador_free,
             computador_rank,
             computador_double,
-            computador_max
-        );
+            computador_max);
 
         printf("           ");
         ImprimirTabelaFinal(linha, jogador_final, computador_final);
         printf("\n");
-    } 
+    }
 }
 
 void MostrarTelaFinal(int jogador_final, int computador_final)
@@ -442,7 +457,7 @@ void MostrarTelaFinal(int jogador_final, int computador_final)
     }
 }
 
-void MostrarOpcoes(int dado_a, int dado_b)
+void MostrarOpcoes()
 {
     printf("Opcoes: \n");
     printf("a) Marcar uma posicao na tabela\n");
@@ -457,9 +472,8 @@ void MostrarPossivelPosicao(char *nome, int pontos)
 }
 
 void MostrarPossiveisPosicoes(
-    int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
-    int rodada, int dado_a, int dado_b
-)
+    int rodada, int dado_a, int dado_b,
+    int jogador_free, int jogador_rank, int jogador_double, int jogador_max)
 {
     printf("Posicoes:\n");
 
@@ -486,37 +500,38 @@ void MostrarPossiveisPosicoes(
     printf("\n");
 }
 
-void MostrarOpcaoRejogarDadosComputador()
+void MostrarDecisaoRejogarDadosComputador()
 {
     printf("O computador decidiu jogar os dois dados novamente.\n");
 }
 
-void MostrarOpcaoSepararDadoComputador(char letra)
+void MostrarDecisaoSepararDadoComputador(char letra)
 {
+    printf("O computador decidiu separar um dos dados e jogar novamente o outro.\n");
     printf("O computador decidiu jogar o dado %c novamente.\n", toupper(letra));
 }
 
-void MostrarPosicaoComputador(char posicao)
+void MostrarDecisaoPosicaoComputador(char posicao)
 {
     printf("O computador decidiu marcar a modalidade ");
 
     switch (posicao)
     {
-        case POSICAO_FREE:
-            printf("FREE");
-            break;
-        case POSICAO_RANK:
-            printf("RANK");
-            break;
-        case POSICAO_DOUBLE:
-            printf("DOUBLE");
-            break;
-        case POSICAO_MAX:
-            printf("MAX");
-            break;
-        default:
-            printf("?");
-            break;
+    case POSICAO_FREE:
+        printf("FREE");
+        break;
+    case POSICAO_RANK:
+        printf("RANK");
+        break;
+    case POSICAO_DOUBLE:
+        printf("DOUBLE");
+        break;
+    case POSICAO_MAX:
+        printf("MAX");
+        break;
+    default:
+        printf("?");
+        break;
     }
 
     printf(".\n");
@@ -565,8 +580,7 @@ void EsperarPorEntrada()
 
 char AvaliarMelhorOpcao(
     int dado_a, int dado_b,
-    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max
-)
+    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max)
 {
     if (!EstaMarcada(modalidade_max) && FormarMax(dado_a, dado_b))
     {
@@ -603,8 +617,7 @@ char AvaliarMelhorOpcao(
 
 char AvaliarMelhorDadoParaRejogar(
     int dado_a, int dado_b,
-    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max
-) 
+    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max)
 {
     if (!EstaMarcada(modalidade_max))
     {
@@ -637,10 +650,9 @@ char AvaliarMelhorDadoParaRejogar(
     return LETRA_DADO_A;
 }
 
-char AvaliarMelhorPosicao(
+char AvaliarMelhorPosicaoParaMarcar(
     int dado_a, int dado_b,
-    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max
-)
+    int modalidade_free, int modalidade_rank, int modalidade_double, int modalidade_max)
 {
     if (!EstaMarcada(modalidade_max) && FormarMax(dado_a, dado_b))
     {
@@ -656,7 +668,7 @@ char AvaliarMelhorPosicao(
     {
         return POSICAO_RANK;
     }
-    
+
     if (!EstaMarcada(modalidade_free))
     {
         return POSICAO_FREE;
@@ -699,104 +711,111 @@ void MaiorSomaDe3()
             int jogador_dado_a = JogarDado();
             int jogador_dado_b = JogarDado();
 
-            Limpar();
-            MostrarCabecalhoJogador(
-                partida,
-                rodada,
-                jogador_dado_a,
-                jogador_dado_b,
-                jogador_free,
-                jogador_rank,
-                jogador_double,
-                jogador_max,
-                computador_free,
-                computador_rank,
-                computador_double,
-                computador_max  
-            );
-
-            MostrarOpcoes(jogador_dado_a, jogador_dado_b);
-
-            char opcao_jogador = PerguntarOpcao();
-
-            switch (opcao_jogador)
-            {
-                case OPCAO_SEPARAR_DADO:
-                    char letra_jogador = PerguntarDadoParaRejogar();
-                    
-                    if (letra_jogador == LETRA_DADO_A)
-                    {
-                        jogador_dado_a = JogarDado();
-                    }
-                    else
-                    {
-                        jogador_dado_b = JogarDado();
-                    }
-                    break;
-                case OPCAO_REJOGAR_DADOS:
-                    jogador_dado_a = JogarDado();
-                    jogador_dado_b = JogarDado();
-                    break;
-            }
-
-            Limpar();
-            MostrarCabecalhoJogador(
-                partida,
-                rodada,
-                jogador_dado_a,
-                jogador_dado_b,
-                jogador_free,
-                jogador_rank,
-                jogador_double,
-                jogador_max,
-                computador_free,
-                computador_rank,
-                computador_double,
-                computador_max  
-            );
-            MostrarPossiveisPosicoes(
-                jogador_free,
-                jogador_rank,
-                jogador_double,
-                jogador_max,
-                rodada,
-                jogador_dado_a,
-                jogador_dado_b
-            );
- 
-            char posicao_jogador = PerguntarPosicao();
-
-            switch (posicao_jogador)
-            {
-                case POSICAO_FREE:
-                    if (!EstaMarcada(jogador_free))
-                    {
-                        jogador_free = CalcularPontosFree(rodada, jogador_dado_a, jogador_dado_b);
-                    }
-                    break;
-                case POSICAO_RANK:
-                    if (!EstaMarcada(jogador_rank))
-                    {
-                        jogador_rank = CalcularPontosRank(rodada, jogador_dado_a, jogador_dado_b);
-                    }
-                    break;
-                case POSICAO_DOUBLE:
-                    if (!EstaMarcada(jogador_double))
-                    {
-                        jogador_double = CalcularPontosDouble(rodada, jogador_dado_a, jogador_dado_b);
-                    }
-                    break;               
-                case POSICAO_MAX:
-                    if (!EstaMarcada(jogador_max))
-                    {
-                        jogador_max = CalcularPontosMax(rodada, jogador_dado_a, jogador_dado_b);
-                    }
-                    break;
-            }
-
             int computador_dado_a = JogarDado();
             int computador_dado_b = JogarDado();
 
+            char opcao_jogador, letra_jogador, posicao_jogador;
+            char opcao_computador, letra_computador, posicao_computador;
+
+            bool posicao_valida;
+
+            Limpar();
+            MostrarCabecalhoJogador(
+                partida,
+                rodada,
+                jogador_dado_a,
+                jogador_dado_b,
+                jogador_free,
+                jogador_rank,
+                jogador_double,
+                jogador_max,
+                computador_free,
+                computador_rank,
+                computador_double,
+                computador_max);
+
+            MostrarOpcoes();
+
+            opcao_jogador = PerguntarOpcao();
+
+            switch (opcao_jogador)
+            {
+            case OPCAO_SEPARAR_DADO:
+                letra_jogador = PerguntarDadoParaRejogar();
+
+                if (letra_jogador == LETRA_DADO_A)
+                {
+                    jogador_dado_a = JogarDado();
+                }
+                else
+                {
+                    jogador_dado_b = JogarDado();
+                }
+                break;
+            case OPCAO_REJOGAR_DADOS:
+                jogador_dado_a = JogarDado();
+                jogador_dado_b = JogarDado();
+                break;
+            }
+
+            Limpar();
+            MostrarCabecalhoJogador(
+                partida,
+                rodada,
+                jogador_dado_a,
+                jogador_dado_b,
+                jogador_free,
+                jogador_rank,
+                jogador_double,
+                jogador_max,
+                computador_free,
+                computador_rank,
+                computador_double,
+                computador_max);
+            MostrarPossiveisPosicoes(
+                rodada,
+                jogador_dado_a,
+                jogador_dado_b,
+                jogador_free,
+                jogador_rank,
+                jogador_double,
+                jogador_max);
+
+            posicao_jogador = PerguntarPosicao();
+            posicao_valida = VerificarPosicao(
+                posicao_jogador,
+                jogador_free,
+                jogador_rank,
+                jogador_double,
+                jogador_max);
+
+            if (!posicao_valida)
+            {
+                posicao_jogador = AvaliarMelhorPosicaoParaMarcar(
+                    jogador_dado_a,
+                    jogador_dado_b,
+                    jogador_free,
+                    jogador_rank,
+                    jogador_double,
+                    jogador_max);
+            }
+
+            switch (posicao_jogador)
+            {
+            case POSICAO_FREE:
+                jogador_free = CalcularPontosFree(rodada, jogador_dado_a, jogador_dado_b);
+                break;
+            case POSICAO_RANK:
+                jogador_rank = CalcularPontosRank(rodada, jogador_dado_a, jogador_dado_b);
+                break;
+            case POSICAO_DOUBLE:
+                jogador_double = CalcularPontosDouble(rodada, jogador_dado_a, jogador_dado_b);
+                break;
+            case POSICAO_MAX:
+                jogador_max = CalcularPontosMax(rodada, jogador_dado_a, jogador_dado_b);
+                break;
+            }
+
             Limpar();
             MostrarCabecalhoComputador(
                 partida,
@@ -810,74 +829,70 @@ void MaiorSomaDe3()
                 computador_free,
                 computador_rank,
                 computador_double,
-                computador_max  
-            );
+                computador_max);
 
-            char opcao_computador = AvaliarMelhorOpcao(
+            opcao_computador = AvaliarMelhorOpcao(
                 computador_dado_a,
                 computador_dado_b,
                 computador_free,
                 computador_rank,
                 computador_double,
-                computador_max
-            );
+                computador_max);
 
             switch (opcao_computador)
             {
-                case OPCAO_SEPARAR_DADO:
-                    char letra_computador = AvaliarMelhorDadoParaRejogar(
-                        computador_dado_a,
-                        computador_dado_b,
-                        computador_free,
-                        computador_rank,
-                        computador_double,
-                        computador_max
-                    );
+            case OPCAO_SEPARAR_DADO:
+                letra_computador = AvaliarMelhorDadoParaRejogar(
+                    computador_dado_a,
+                    computador_dado_b,
+                    computador_free,
+                    computador_rank,
+                    computador_double,
+                    computador_max);
 
-                    MostrarOpcaoSepararDadoComputador(letra_computador);
-                    EsperarPorEntrada();
+                MostrarDecisaoSepararDadoComputador(letra_computador);
+                EsperarPorEntrada();
 
-                    if (letra_computador == LETRA_DADO_A)
-                    {
-                        computador_dado_a = JogarDado();
-                    }
-                    else
-                    {
-                        computador_dado_b = JogarDado();
-                    }
-                    break;
-                case OPCAO_REJOGAR_DADOS:
-                    MostrarOpcaoRejogarDadosComputador();
-                    EsperarPorEntrada();
-
+                if (letra_computador == LETRA_DADO_A)
+                {
                     computador_dado_a = JogarDado();
+                }
+                else
+                {
                     computador_dado_b = JogarDado();
-                    break;
+                }
+                break;
+            case OPCAO_REJOGAR_DADOS:
+                MostrarDecisaoRejogarDadosComputador();
+                EsperarPorEntrada();
+
+                computador_dado_a = JogarDado();
+                computador_dado_b = JogarDado();
+                break;
             }
 
-            char posicao_computador = AvaliarMelhorPosicao(
+            posicao_computador = AvaliarMelhorPosicaoParaMarcar(
                 computador_dado_a,
                 computador_dado_b,
                 computador_free,
                 computador_rank,
                 computador_double,
-                computador_max  
-            );
+                computador_max);
 
             switch (posicao_computador)
             {
-                case POSICAO_FREE:
-                    computador_free = CalcularPontosFree(rodada, computador_dado_a, computador_dado_b);
-                    break;
-                case POSICAO_RANK:
-                    computador_rank = CalcularPontosRank(rodada, computador_dado_a, computador_dado_b);
-                    break;
-                case POSICAO_DOUBLE:
-                    computador_double = CalcularPontosDouble(rodada, computador_dado_a, computador_dado_b);
-                    break;
-                case POSICAO_MAX:
-                    computador_max = CalcularPontosMax(rodada, computador_dado_a, computador_dado_b);
-                    break;
+            case POSICAO_FREE:
+                computador_free = CalcularPontosFree(rodada, computador_dado_a, computador_dado_b);
+                break;
+            case POSICAO_RANK:
+                computador_rank = CalcularPontosRank(rodada, computador_dado_a, computador_dado_b);
+                break;
+            case POSICAO_DOUBLE:
+                computador_double = CalcularPontosDouble(rodada, computador_dado_a, computador_dado_b);
+                break;
+            case POSICAO_MAX:
+                computador_max = CalcularPontosMax(rodada, computador_dado_a, computador_dado_b);
+                break;
             }
 
             Limpar();
@@ -893,9 +908,8 @@ void MaiorSomaDe3()
                 computador_free,
                 computador_rank,
                 computador_double,
-                computador_max  
-            );
-            MostrarPosicaoComputador(posicao_computador);
+                computador_max);
+            MostrarDecisaoPosicaoComputador(posicao_computador);
             EsperarPorEntrada();
         }
 
@@ -903,14 +917,12 @@ void MaiorSomaDe3()
             jogador_free,
             jogador_rank,
             jogador_double,
-            jogador_max
-        );
+            jogador_max);
         computador_final += CalcularPontuacaoTotal(
             computador_free,
             computador_rank,
             computador_double,
-            computador_max
-        );
+            computador_max);
 
         Limpar();
         MostrarResumoDaPartida(
@@ -924,8 +936,7 @@ void MaiorSomaDe3()
             computador_free,
             computador_rank,
             computador_double,
-            computador_max
-        );
+            computador_max);
 
         EsperarPorEntrada();
     }

@@ -315,6 +315,28 @@ void MostrarEmpate()
     printf("\n");
 }
 
+void MostrarInstrucoes()
+{
+    MostrarTitulo();
+    printf("-> O jogo consiste em 3 partidas com 4 rodadas cada.\n");
+    printf("-> Quem somar a maior quantidade de pontos durante as 3 partidas, torna-se o ganhador.\n");
+    printf("\n");
+    printf("-> Em cada rodada, o jogador joga 2 dados e pode escolher uma opcao:\n");
+    printf("a) Marcar uma posicao na tabela\n");
+    printf("b) Separar um dos dados e jogar novamente o outro\n");
+    printf("c) Jogar novamente os dois dados\n");
+    printf("\n");
+    printf("-> Conforme o valor dos dados, o jogador marca uma posicao na tabela:\n");
+    printf("f) FREE: 2 dados quaisquer (pontua a soma dos dados)\n");
+    printf("r) RANK: 2 dados diferentes em sequencia (20 pontos)\n");
+    printf("d) DOUBLE: 2 dados iguais diferentes de 6 (30 pontos)\n");
+    printf("m) MAX: 2 dados iguais a 6 (50 pontos)\n");
+    printf("\n");
+    printf("OBS: Caso o jogador marque RANK, DOUBLE ou MAX ja na primeira rodada,\n");
+    printf("     acrescenta-se um bonus de 5 pontos.\n");
+    printf("\n");
+}
+
 void MostrarDadosComTabelaDaPartida(
     int dado_a, int dado_b,
     int jogador_free, int jogador_rank, int jogador_double, int jogador_max,
@@ -693,6 +715,11 @@ void MaiorSomaDe3()
 
     int jogador_final = 0;
     int computador_final = 0;
+
+    Limpar();
+    MostrarInstrucoes();
+
+    EsperarPorEntrada();
 
     for (int partida = 1; partida <= 3; partida++)
     {

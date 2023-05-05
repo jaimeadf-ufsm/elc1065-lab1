@@ -197,18 +197,6 @@ int JogarDados(char modo, int jogador)
     return pontos_total;
 }
 
-int FazerJogada(char modo, int jogador, char jogada)
-{
-    if (jogada == JOGADA_JOGAR_DADOS)
-    {
-        return JogarDados(modo, jogador);
-    }
-    else
-    {
-        return 0;
-    }
-}
-
 char TurnoJogador()
 {
     char jogada;
@@ -243,6 +231,18 @@ char TurnoComputador(int pontos_adversario, int pontos_computador)
     {
         printf("O computador decidiu pular a vez!\n");
         return JOGADA_PASSAR_VEZ;
+    }
+}
+
+int FazerJogada(char modo, int jogador, char jogada)
+{
+    if (jogada == JOGADA_JOGAR_DADOS)
+    {
+        return JogarDados(modo, jogador);
+    }
+    else
+    {
+        return 0;
     }
 }
 

@@ -28,22 +28,40 @@ int CalcularPontosDadoVermelho(int dado)
     return dado == 6 ? 2 * dado : dado;
 }
 
+void ImprimirJogador(char modo, int jogador)
+{
+    if (jogador == JOGADOR_1)
+    {
+        printf("JOGADOR  1");
+    }
+    else
+    {
+        printf(modo == MODO_VS_COMPUTADOR ? "COMPUTADOR" : "JOGADOR  2");
+    }
+}
+
 void MostrarTitulo()
 {
     printf("==================== A Guerra dos Dados ====================\n");
 }
 
-void MostrarPontos(int jogador1_pontos, int jogador2_pontos)
+void MostrarPontos(char modo, int jogador1_pontos, int jogador2_pontos)
 {
-    printf("Jogador 1: %d pontos\n", jogador1_pontos);
-    printf("Jogador 2: %d pontos\n", jogador2_pontos);
+    ImprimirJogador(modo, JOGADOR_1);
+    printf(": %d pontos\n", jogador1_pontos);
+    ImprimirJogador(modo, JOGADOR_2);
+    printf(": %d pontos\n", jogador2_pontos);
 }
 
-void MostrarCabecalhoTurno(int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
+void MostrarCabecalhoTurno(char modo, int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
 {
     MostrarTitulo();
-    printf("Vez do Jogador %d                                   Rodada %2d\n", jogador, rodada);
-    MostrarPontos(jogador1_pontos, jogador2_pontos);
+
+    printf("Vez do ");
+    ImprimirJogador(modo, jogador);
+    printf("                                  Rodada %2d\n", rodada);
+
+    MostrarPontos(modo, jogador1_pontos, jogador2_pontos);
     printf("\n");
 }
 
@@ -85,24 +103,10 @@ void MostrarDado(int dado)
             break;
     }
 
-    printf("+-------+\n");
+    printf("+-------+\n\n");
 }
 
-void MostrarDadoBranco(int dado, int pontos)
-{
-    printf("Branco) %d pontos\n", pontos);
-    MostrarDado(dado);
-    printf("\n");
-}
-
-void MostrarDadoVermelho(int dado, int pontos)
-{
-    printf("Vermelho) %d pontos\n");
-    MostrarDado(dado);
-    printf("\n");
-}
-
-void MostrarResultado(int resultado)
+void MostrarResultado(char modo, int resultado)
 {
     printf("\n");
 
@@ -112,14 +116,19 @@ void MostrarResultado(int resultado)
             printf("Empate!\n");
             break;
         case JOGADOR_1:
-            printf("O jogador 1 ganhou!\n");
-            break;
         case JOGADOR_2:
-            printf("O jogador 2 ganhou!\n");
+            ImprimirJogador(modo, resultado);
+            printf(" GANHOU!\n");
             break;
     }
 
     printf("\n");
+}
+
+void LimparTurno(char modo, int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
+{
+    Limpar();
+    MostrarCabecalhoTurno(modo, jogador, rodada, jogador1_pontos, jogador2_pontos);
 }
 
 char LerCaractere()
@@ -149,23 +158,6 @@ char PerguntarModo()
     return modo;
 }
 
-char PerguntarJogada()
-{
-    char jogada;
-
-    do {
-        printf("Opcoes:\n");
-        printf("a) Passar a vez\n");
-        printf("b) Jogar dados\n");
-        printf("\n");
-        printf("O que voce deseja fazer? ");
-
-        jogada = LerCaractere();
-    } while (jogada != JOGADA_PASSAR_VEZ && jogada != JOGADA_JOGAR_DADOS);
-
-    return jogada;
-}
-
 bool PerguntarJogarNovamente()
 {
     printf("Voce deseja jogar uma nova partida (s/n)? ");
@@ -182,7 +174,7 @@ void EsperarPorEntrada()
     scanf("%c", &nova_linha);
 }
 
-int JogarDados(int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
+int JogarDados(char modo, int jogador)
 {
     int dado_branco = JogarDado();
     int dado_vermelho = JogarDado();
@@ -191,23 +183,25 @@ int JogarDados(int jogador, int rodada, int jogador1_pontos, int jogador2_pontos
     int pontos_vermelho = CalcularPontosDadoVermelho(dado_vermelho);
     int pontos_total = pontos_branco + pontos_vermelho;
 
-    Limpar();
+    ImprimirJogador(modo, jogador);
+    printf(" pontuou %d pontos! \n\n", pontos_total);
 
-    MostrarCabecalhoTurno(jogador, rodada, jogador1_pontos, jogador2_pontos);
-    printf("O jogador %d pontuou %d pontos! \n\n", jogador, pontos_total);
-    MostrarDadoBranco(dado_branco, pontos_branco);
-    MostrarDadoVermelho(dado_vermelho, pontos_vermelho);
+    printf("Branco) %d pontos\n", pontos_branco);
+    MostrarDado(dado_branco);
+
+    printf("Vermelho) %d pontos\n", pontos_vermelho);
+    MostrarDado(dado_vermelho);
 
     EsperarPorEntrada();
 
     return pontos_total;
 }
 
-int JogarTurno(char jogada, int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
+int FazerJogada(char modo, int jogador, char jogada)
 {
     if (jogada == JOGADA_JOGAR_DADOS)
     {
-        return JogarDados(jogador, rodada, jogador1_pontos, jogador2_pontos);
+        return JogarDados(modo, jogador);
     }
     else
     {
@@ -215,40 +209,41 @@ int JogarTurno(char jogada, int jogador, int rodada, int jogador1_pontos, int jo
     }
 }
 
-int TurnoJogador(int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
+char TurnoJogador()
 {
-    Limpar();
-    MostrarCabecalhoTurno(jogador, rodada, jogador1_pontos, jogador2_pontos);
+    char jogada;
 
-    return JogarTurno(PerguntarJogada(), jogador, rodada, jogador1_pontos, jogador2_pontos);
+    do {
+        printf("Opcoes:\n");
+        printf("a) Passar a vez\n");
+        printf("b) Jogar dados\n");
+        printf("\n");
+        printf("O que voce deseja fazer? ");
+
+        jogada = LerCaractere();
+    } while (jogada != JOGADA_PASSAR_VEZ && jogada != JOGADA_JOGAR_DADOS);
+
+    return jogada;
 }
 
 /*
-O computador escolhe passar a vez se estiver com 15 pontos ou
-mais ou se o adversario estiver perdido (com mais de 21 pontos).
-Nas possibilidades, o computador joga os dados.
+O computador escolher jogar os dados se possuir menos que 15
+pontos ou se seu adversario estiver ganhando (menos pontos que
+computador e menores ou iguais a 21). Nas outras possibilidades,
+ele escolhe passar a vez.
 */
-int TurnoComputador(int jogador, int rodada, int jogador1_pontos, int jogador2_pontos)
+char TurnoComputador(int pontos_adversario, int pontos_computador)
 {
-    Limpar();
-    MostrarCabecalhoTurno(jogador, rodada, jogador1_pontos, jogador2_pontos);
-
-    char jogada;
-
-    if (jogador2_pontos >= 15 || jogador1_pontos >= 21)
+    if (pontos_computador <= 15 || (pontos_computador < pontos_adversario && pontos_adversario <= 21))
     {
-        printf("O computador decidiu pular a vez!\n");
-        jogada = JOGADA_PASSAR_VEZ;
+        printf("O computador decidiu apostar e jogar os dados!\n");
+        return JOGADA_JOGAR_DADOS;
     }
     else
     {
-        printf("O computador decidiu apostar e jogar os dados!\n");
-        jogada = JOGADA_JOGAR_DADOS;   
+        printf("O computador decidiu pular a vez!\n");
+        return JOGADA_PASSAR_VEZ;
     }
-
-    EsperarPorEntrada();
-
-    return JogarTurno(jogada, jogador, rodada, jogador1_pontos, jogador2_pontos);
 }
 
 int VerificarResultado(int jogador1_pontos, int jogador2_pontos)
@@ -284,25 +279,39 @@ void VermelhoEBranco(char modo)
 
     for (int rodada = 1; rodada <= 3; rodada++)
     {
-        jogador1_pontos += TurnoJogador(JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
+        char jogada_jogador1;
+        char jogada_jogador2;
+
+        LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
+        jogada_jogador1 = TurnoJogador();
+
+
+        LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
+        jogador1_pontos += FazerJogada(modo, JOGADOR_1, jogada_jogador1);
+
+        LimparTurno(modo, JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
 
         if (modo == MODO_VS_PLAYER)
         {
-            jogador2_pontos += TurnoJogador(JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
+            jogada_jogador2 = TurnoJogador();
         }
         else
         {
-            jogador2_pontos += TurnoComputador(JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
+            jogada_jogador2 = TurnoComputador(jogador1_pontos, jogador2_pontos);
+            EsperarPorEntrada();
         }
-    }
 
-    Limpar();
-    MostrarTitulo();
-    MostrarPontos(jogador1_pontos, jogador2_pontos);
+        LimparTurno(modo, JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
+        jogador2_pontos += FazerJogada(modo, JOGADOR_2, jogada_jogador2);
+    }
 
     int resultado = VerificarResultado(jogador1_pontos, jogador2_pontos);
 
-    MostrarResultado(resultado);
+    Limpar();
+    MostrarTitulo();
+    MostrarPontos(modo, jogador1_pontos, jogador2_pontos);
+
+    MostrarResultado(modo, resultado);
 }
 
 int main()
@@ -310,11 +319,6 @@ int main()
     MostrarTitulo();
 
     char modo = PerguntarModo();
-
-    if (modo == MODO_VS_COMPUTADOR)
-    {
-        printf("O computador jogara como o Jogador 2.\n");
-    }
 
     do {
         VermelhoEBranco(modo);

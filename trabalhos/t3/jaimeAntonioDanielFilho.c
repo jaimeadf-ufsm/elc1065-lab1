@@ -170,7 +170,7 @@ void EsperarPorEntrada()
 {
     char nova_linha;
 
-    printf("Aperte ENTER para continuar...");
+    printf("\nAperte ENTER para continuar...");
 
     do {
         scanf("%c", &nova_linha);
@@ -218,21 +218,20 @@ char TurnoJogador()
 }
 
 /*
-O computador escolher jogar os dados se possuir menos que 15
-pontos ou se seu adversario estiver ganhando (menos pontos que
-computador e menores ou iguais a 21). Nas outras possibilidades,
-ele escolhe passar a vez.
+O computador escolhe jogar os dados se possuir menos que 15
+pontos ou se estiver perdendo do seu adversario. Nas outras
+possibilidades, ele escolhe passar a vez.
 */
 char TurnoComputador(int pontos_adversario, int pontos_computador)
 {
-    if (pontos_computador <= 15 || (pontos_computador < pontos_adversario && pontos_adversario <= 21))
+    if ((pontos_computador <= 15 || pontos_computador < pontos_adversario) && pontos_adversario <= 21)
     {
-        printf("O computador decidiu apostar e jogar os dados!\n");
+        printf("O COMPUTADOR decidiu apostar e jogar os dados!\n");
         return JOGADA_JOGAR_DADOS;
     }
     else
     {
-        printf("O computador decidiu pular a vez!\n");
+        printf("O COMPUTADOR decidiu pular a vez!\n");
         return JOGADA_PASSAR_VEZ;
     }
 }

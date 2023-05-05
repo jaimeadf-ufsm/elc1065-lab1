@@ -171,7 +171,10 @@ void EsperarPorEntrada()
     char nova_linha;
 
     printf("Aperte ENTER para continuar...");
-    scanf("%c", &nova_linha);
+
+    do {
+        scanf("%c", &nova_linha);
+    } while (nova_linha != '\n');
 }
 
 int JogarDados(char modo, int jogador)

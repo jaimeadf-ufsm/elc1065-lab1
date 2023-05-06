@@ -278,7 +278,7 @@ int FazerAcao(char modo, int jogador, char acao, int pontos)
 
 int VerificarResultado(int jogador1_pontos, int jogador2_pontos)
 {
-    if (jogador1_pontos >= 21 && jogador2_pontos >= 21 || jogador1_pontos == jogador2_pontos)
+    if (jogador1_pontos > 21 && jogador2_pontos > 21 || jogador1_pontos == jogador2_pontos)
     {
         return EMPATE;
     }

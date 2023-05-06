@@ -249,9 +249,13 @@ char TurnoComputador(int pontos_adversario, int pontos_computador)
             {
                 printf("O Computador decidiu passar a vez por estar ganho.\n");
             }
-            else
+            else if (pontos_computador < 21)
             {
                 printf("O Computador decidiu passar a vez por nao considerar seguro\narriscar a sorte.\n");
+            }
+            else
+            {
+                printf("O Computador decidiu passar a vez por que nenhuma acao altera\no resultado.\n");
             }
 
             return ACAO_PASSAR_VEZ;

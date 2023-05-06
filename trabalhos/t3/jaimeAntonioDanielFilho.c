@@ -282,11 +282,11 @@ int VerificarResultado(int jogador1_pontos, int jogador2_pontos)
     {
         return EMPATE;
     }
-    else if (jogador2_pontos >= 21)
+    else if (jogador2_pontos > 21)
     {
         return JOGADOR_1;
     }
-    else if (jogador1_pontos >= 21)
+    else if (jogador1_pontos > 21)
     {
         return JOGADOR_2;
     }

@@ -10,8 +10,8 @@
 #define MODO_VS_PLAYER 'a'
 #define MODO_VS_COMPUTADOR 'b'
 
-#define JOGADA_PASSAR_VEZ 'a'
-#define JOGADA_JOGAR_DADOS 'b'
+#define ACAO_PASSAR_VEZ 'a'
+#define ACAO_JOGAR_DADOS 'b'
 
 void Limpar()
 {
@@ -206,7 +206,7 @@ int JogarDados(char modo, int jogador, int pontos)
 
 char TurnoJogador()
 {
-    char jogada;
+    char acao;
 
     do {
         printf("Opcoes:\n");
@@ -215,10 +215,10 @@ char TurnoJogador()
         printf("\n");
         printf("O que voce deseja fazer? ");
 
-        jogada = LerCaractere();
-    } while (jogada != JOGADA_PASSAR_VEZ && jogada != JOGADA_JOGAR_DADOS);
+        acao = LerCaractere();
+    } while (acao != ACAO_PASSAR_VEZ && acao != ACAO_JOGAR_DADOS);
 
-    return jogada;
+    return acao;
 }
 
 /*
@@ -234,13 +234,13 @@ char TurnoComputador(int pontos_adversario, int pontos_computador)
         if (pontos_computador <= pontos_adversario)
         {
             printf("O Computador decidiu jogar os dados por estar perdendo.\n");
-            return JOGADA_JOGAR_DADOS;
+            return ACAO_JOGAR_DADOS;
 
         }
         else if (pontos_computador <= 15)
         {
             printf("O Computador decidiu jogar os dados por estar com poucos\npontos.\n");
-            return JOGADA_JOGAR_DADOS;
+            return ACAO_JOGAR_DADOS;
         }
         else
         {
@@ -253,19 +253,19 @@ char TurnoComputador(int pontos_adversario, int pontos_computador)
                 printf("O Computador decidiu passar a vez por nao considerar seguro\narriscar a sorte.\n");
             }
 
-            return JOGADA_PASSAR_VEZ;
+            return ACAO_PASSAR_VEZ;
         }
     }
     else
     {
         printf("O Computador decidiu passar a vez por que seu adversario\nesta perdido.\n");
-        return JOGADA_PASSAR_VEZ;
+        return ACAO_PASSAR_VEZ;
     }
 }
 
-int FazerJogada(char modo, int jogador, char jogada, int pontos)
+int FazerAcao(char modo, int jogador, char acao, int pontos)
 {
-    if (jogada == JOGADA_JOGAR_DADOS)
+    if (acao == ACAO_JOGAR_DADOS)
     {
         return JogarDados(modo, jogador, pontos);
     }
@@ -308,30 +308,30 @@ void VermelhoEBranco(char modo)
 
     for (int rodada = 1; rodada <= 3; rodada++)
     {
-        char jogada_jogador1;
-        char jogada_jogador2;
+        char acao_jogador1;
+        char acao_jogador2;
 
         LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
-        jogada_jogador1 = TurnoJogador();
+        acao_jogador1 = TurnoJogador();
 
 
         LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
-        jogador1_pontos += FazerJogada(modo, JOGADOR_1, jogada_jogador1, jogador1_pontos);
+        jogador1_pontos += FazerAcao(modo, JOGADOR_1, acao_jogador1, jogador1_pontos);
 
         LimparTurno(modo, JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
 
         if (modo == MODO_VS_PLAYER)
         {
-            jogada_jogador2 = TurnoJogador();
+            acao_jogador2 = TurnoJogador();
         }
         else
         {
-            jogada_jogador2 = TurnoComputador(jogador1_pontos, jogador2_pontos);
+            acao_jogador2 = TurnoComputador(jogador1_pontos, jogador2_pontos);
             EsperarPorEntrada();
         }
 
         LimparTurno(modo, JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
-        jogador2_pontos += FazerJogada(modo, JOGADOR_2, jogada_jogador2, jogador2_pontos);
+        jogador2_pontos += FazerAcao(modo, JOGADOR_2, acao_jogador2, jogador2_pontos);
     }
 
     int resultado = VerificarResultado(jogador1_pontos, jogador2_pontos);

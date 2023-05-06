@@ -145,11 +145,12 @@ char PerguntarModo()
 {
     char modo;
 
+    printf("Modos:\n");
+    printf("a) Player X Player\n");
+    printf("b) Player x Computador\n");
+    printf("\n");
+
     do {
-        printf("Modos:\n");
-        printf("a) Player X Player\n");
-        printf("b) Player x Computador\n");
-        printf("\n");
         printf("Qual modo voce deseja jogar? ");
 
         modo = LerCaractere();
@@ -208,13 +209,13 @@ char TurnoJogador()
 {
     char acao;
 
-    do {
-        printf("Opcoes:\n");
-        printf("a) Passar a vez\n");
-        printf("b) Jogar dados\n");
-        printf("\n");
-        printf("O que voce deseja fazer? ");
+    printf("Opcoes:\n");
+    printf("a) Passar a vez\n");
+    printf("b) Jogar dados\n");
+    printf("\n");
 
+    do {
+        printf("O que voce deseja fazer? ");
         acao = LerCaractere();
     } while (acao != ACAO_PASSAR_VEZ && acao != ACAO_JOGAR_DADOS);
 

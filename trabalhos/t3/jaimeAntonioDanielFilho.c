@@ -226,7 +226,7 @@ char TurnoJogador()
 O computador escolhe jogar os dados se, quando seu adversário ainda não estiver perdido
 (ou seja, com menos ou igual a 21 pontos), possuir menos pontos que o adversário ou possuir
 menos que 15 pontos. Nas outras possibilidades, ele escolhe passar a vez por considerar mais
-seguro.
+seguro. Mais detalhes sobre o sua lógica, podem ser vistos nas mensagens abaixo.
 */
 char TurnoComputador(int pontos_adversario, int pontos_computador)
 {
@@ -314,7 +314,6 @@ void VermelhoEBranco(char modo)
 
         LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
         acao_jogador1 = TurnoJogador();
-
 
         LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
         jogador1_pontos += FazerAcao(modo, JOGADOR_1, acao_jogador1, jogador1_pontos);

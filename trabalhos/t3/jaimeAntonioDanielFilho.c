@@ -345,6 +345,7 @@ void VermelhoEBranco(char modo)
 
 int main()
 {
+    Limpar();
     MostrarTitulo();
 
     char modo = PerguntarModo();

@@ -32,11 +32,11 @@ void ImprimirJogador(char modo, int jogador)
 {
     if (jogador == JOGADOR_1)
     {
-        printf("JOGADOR  1");
+        printf("Jogador  1");
     }
     else
     {
-        printf(modo == MODO_VS_COMPUTADOR ? "COMPUTADOR" : "JOGADOR  2");
+        printf(modo == MODO_VS_COMPUTADOR ? "Computador" : "Jogador  2");
     }
 }
 
@@ -177,27 +177,31 @@ void EsperarPorEntrada()
     } while (nova_linha != '\n');
 }
 
-int JogarDados(char modo, int jogador)
+int JogarDados(char modo, int jogador, int pontos)
 {
     int dado_branco = JogarDado();
     int dado_vermelho = JogarDado();
 
     int pontos_branco = dado_branco;
     int pontos_vermelho = CalcularPontosDadoVermelho(dado_vermelho);
-    int pontos_total = pontos_branco + pontos_vermelho;
+    int pontos_obtidos = pontos_branco + pontos_vermelho;
 
     ImprimirJogador(modo, jogador);
-    printf(" pontuou %d pontos! \n\n", pontos_total);
+    printf(" pontuou %d pontos! \n\n", pontos_obtidos);
 
-    printf("Branco) %d pontos\n", pontos_branco);
+    printf("Branco) +%d pontos => %d pontos\n", pontos_branco, pontos + pontos_branco);
     MostrarDado(dado_branco);
 
-    printf("Vermelho) %d pontos\n", pontos_vermelho);
+    printf(
+        "Vermelho) +%d pontos => %d pontos\n",
+        pontos_vermelho,
+        pontos + pontos_branco + pontos_vermelho
+    );
     MostrarDado(dado_vermelho);
 
     EsperarPorEntrada();
 
-    return pontos_total;
+    return pontos_obtidos;
 }
 
 char TurnoJogador()
@@ -218,29 +222,52 @@ char TurnoJogador()
 }
 
 /*
-O computador escolhe jogar os dados se possuir menos que 15
-pontos ou se estiver perdendo do seu adversario. Nas outras
-possibilidades, ele escolhe passar a vez.
+O computador escolhe jogar os dados se, quando seu adversário ainda não estiver perdido
+(ou seja, com menos ou igual a 21 pontos), possuir menos pontos que o adversário ou possuir
+menos que 15 pontos. Nas outras possibilidades, ele escolhe passar a vez por considerar mais
+seguro.
 */
 char TurnoComputador(int pontos_adversario, int pontos_computador)
 {
-    if ((pontos_computador <= 15 || pontos_computador < pontos_adversario) && pontos_adversario <= 21)
+    if (pontos_adversario <= 21)
     {
-        printf("O COMPUTADOR decidiu apostar e jogar os dados!\n");
-        return JOGADA_JOGAR_DADOS;
+        if (pontos_computador <= pontos_adversario)
+        {
+            printf("O Computador decidiu jogar os dados por estar perdendo.\n");
+            return JOGADA_JOGAR_DADOS;
+
+        }
+        else if (pontos_computador <= 15)
+        {
+            printf("O Computador decidiu jogar os dados por estar com poucos\npontos.\n");
+            return JOGADA_JOGAR_DADOS;
+        }
+        else
+        {
+            if (pontos_computador == 21)
+            {
+                printf("O Computador decidiu passar a vez por estar ganho.\n");
+            }
+            else
+            {
+                printf("O Computador decidiu passar a vez por nao considerar seguro\narriscar a sorte.\n");
+            }
+
+            return JOGADA_PASSAR_VEZ;
+        }
     }
     else
     {
-        printf("O COMPUTADOR decidiu pular a vez!\n");
+        printf("O Computador decidiu passar a vez por que seu adversario\nesta perdido.\n");
         return JOGADA_PASSAR_VEZ;
     }
 }
 
-int FazerJogada(char modo, int jogador, char jogada)
+int FazerJogada(char modo, int jogador, char jogada, int pontos)
 {
     if (jogada == JOGADA_JOGAR_DADOS)
     {
-        return JogarDados(modo, jogador);
+        return JogarDados(modo, jogador, pontos);
     }
     else
     {
@@ -289,7 +316,7 @@ void VermelhoEBranco(char modo)
 
 
         LimparTurno(modo, JOGADOR_1, rodada, jogador1_pontos, jogador2_pontos);
-        jogador1_pontos += FazerJogada(modo, JOGADOR_1, jogada_jogador1);
+        jogador1_pontos += FazerJogada(modo, JOGADOR_1, jogada_jogador1, jogador1_pontos);
 
         LimparTurno(modo, JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
 
@@ -304,7 +331,7 @@ void VermelhoEBranco(char modo)
         }
 
         LimparTurno(modo, JOGADOR_2, rodada, jogador1_pontos, jogador2_pontos);
-        jogador2_pontos += FazerJogada(modo, JOGADOR_2, jogada_jogador2);
+        jogador2_pontos += FazerJogada(modo, JOGADOR_2, jogada_jogador2, jogador2_pontos);
     }
 
     int resultado = VerificarResultado(jogador1_pontos, jogador2_pontos);

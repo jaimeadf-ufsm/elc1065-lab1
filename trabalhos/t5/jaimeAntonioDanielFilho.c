@@ -32,11 +32,6 @@ bool EstaNoCanto(int camada, int linha, int coluna)
         (coluna == borda_inicial || coluna == borda_final);
 }
 
-bool EstaPreenchido(char caractere)
-{
-    return caractere == 'X' || caractere == '0';
-}
-
 void Girar(char matriz[TAMANHO][TAMANHO], int camada, int direcao_linha, int direcao_coluna)
 {
     int linha_inicial = camada;
@@ -85,27 +80,18 @@ void GirarAntiHorario(char matriz[TAMANHO][TAMANHO], int camada)
 
 bool VerificarCruz(char matriz[TAMANHO][TAMANHO])
 {
-    char caractere_vertical = matriz[CENTRO][0];
-    char carectere_horizontal = matriz[0][CENTRO];
+    char caractere = matriz[0][CENTRO];
 
-    if (!EstaPreenchido(caractere_vertical) && !EstaPreenchido(carectere_horizontal))
+    if (caractere == '.')
     {
         return false;
     }
 
-    for (int i = 1; i < TAMANHO; i++)
+    for (int i = 1; i < CENTRO; i++)
     {
-        if (i != CENTRO)
+        if (matriz[i][CENTRO] != caractere)
         {
-            if (matriz[CENTRO][i] != caractere_vertical)
-            {
-                return false;
-            }
-
-            if (matriz[i][CENTRO] != carectere_horizontal)
-            {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -114,27 +100,18 @@ bool VerificarCruz(char matriz[TAMANHO][TAMANHO])
 
 bool VerificarX(char matriz[TAMANHO][TAMANHO])
 {
-    char caractere_principal = matriz[0][0];
-    char carectere_secundario = matriz[0][TAMANHO - 1];
+    char caractere = matriz[0][0];
 
-    if (!EstaPreenchido(caractere_principal) && !EstaPreenchido(carectere_secundario))
+    if (caractere == '.')
     {
         return false;
     }
 
-    for (int i = 1; i < TAMANHO; i++)
+    for (int i = 1; i < CENTRO; i++)
     {
-        if (i != CENTRO)
+        if (matriz[i][i] != caractere)
         {
-            if (matriz[i][i] != caractere_principal)
-            {
-                return false;
-            }
-
-            if (matriz[i][TAMANHO - i - 1] != carectere_secundario)
-            {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -157,7 +134,6 @@ int main()
 
     do
     {
-
         Limpar();
         ImprimirMatriz(matriz);
 

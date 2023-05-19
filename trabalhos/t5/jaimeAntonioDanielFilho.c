@@ -12,70 +12,75 @@ void Limpar()
 
 void ImprimirMatriz(char matriz[TAMANHO][TAMANHO])
 {
-    for (int linha = 0; linha < TAMANHO; linha++)
+    for (int i = 0; i < TAMANHO; i++)
     {
-        for (int coluna = 0; coluna < TAMANHO; coluna++)
+        for (int j = 0; j < TAMANHO; j++)
         {
-            printf(" %c ", matriz[linha][coluna]);
+            printf(" %c ", matriz[i][j]);
         }
 
         printf("\n");
     }
 }
 
-bool EstaNoCanto(int camada, int linha, int coluna)
+void GirarAntiHorario(char matriz[TAMANHO][TAMANHO], int camada)
 {
     int borda_inicial = camada;
     int borda_final = TAMANHO - camada - 1;
 
-    return (linha == borda_inicial || linha == borda_final) &&
-        (coluna == borda_inicial || coluna == borda_final);
-}
+    char temporario = matriz[borda_inicial][borda_inicial];
 
-void Girar(char matriz[TAMANHO][TAMANHO], int camada, int direcao_linha, int direcao_coluna)
-{
-    int linha_inicial = camada;
-    int coluna_inicial = camada;
-
-    int linha = linha_inicial;
-    int coluna = coluna_inicial;
-
-    char anterior = matriz[linha][coluna];
-
-    do
+    for (int i = borda_inicial; i < borda_final; i++)
     {
-        linha += direcao_linha;
-        coluna += direcao_coluna;
+        matriz[borda_inicial][i] = matriz[borda_inicial][i + 1];
+    }
 
-        if (EstaNoCanto(camada, linha, coluna))
-        {
-            int direcao_temporaria = direcao_linha;
+    for (int j = borda_inicial; j < borda_final; j++)
+    {
+        matriz[j][borda_final] = matriz[j + 1][borda_final];
+    }
 
-            direcao_linha = direcao_coluna;
-            direcao_coluna = direcao_temporaria;
+    for (int i = borda_final; i > borda_inicial; i--)
+    {
+        matriz[borda_final][i] = matriz[borda_final][i - 1];
+    }
 
-            if (linha == coluna)
-            {
-                direcao_linha *= -1;
-                direcao_coluna *= -1;
-            }
-        }
+    for (int j = borda_final; j > borda_inicial; j--)
+    {
+        matriz[j][borda_inicial] = matriz[j - 1][borda_inicial];
+    }
 
-        char atual = matriz[linha][coluna];
-
-        matriz[linha][coluna] = anterior;
-        anterior = atual;
-    } while (linha != linha_inicial || coluna != coluna_inicial);
+    matriz[borda_inicial + 1][borda_inicial] = temporario;
 }
 
 void GirarHorario(char matriz[TAMANHO][TAMANHO], int camada)
 {
-    Girar(matriz, camada, 0, 1);
-}
+    int borda_inicial = camada;
+    int borda_final = TAMANHO - camada - 1;
 
-void GirarAntiHorario(char matriz[TAMANHO][TAMANHO], int camada)
-{
-    Girar(matriz, camada, 1, 0);
+    char temporario = matriz[borda_inicial][borda_inicial];
+
+    for (int i = borda_inicial; i < borda_final; i++)
+    {
+        matriz[i][borda_inicial] = matriz[i + 1][borda_inicial];
+    }
+
+    for (int j = borda_inicial; j < borda_final; j++)
+    {
+        matriz[borda_final][j] = matriz[borda_final][j + 1];
+    }
+    
+    for (int i = borda_final; i > borda_inicial; i--)
+    {
+        matriz[i][borda_final] = matriz[i - 1][borda_final];
+    }
+
+    for (int j = borda_final; j > borda_inicial; j--)
+    {
+        matriz[borda_inicial][j] = matriz[borda_inicial][j - 1];
+    }
+
+    matriz[borda_inicial][borda_inicial + 1] = temporario;
 }
 
 bool VerificarCruz(char matriz[TAMANHO][TAMANHO])

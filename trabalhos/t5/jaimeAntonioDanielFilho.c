@@ -153,9 +153,10 @@ int main()
         { 'X', '.', '.', '.', '.', '.', '0' }
     };
 
-    while (true)
+    char opcao;
+
+    do
     {
-        char opcao;
 
         Limpar();
         ImprimirMatriz(matriz);
@@ -173,6 +174,7 @@ int main()
         printf("1) Gira no sentido anti-horario.\n");
         printf("2) Gira no sentido horario.\n");
         printf("3) Gira no sentido anti-horario.\n");
+        printf("s) Sair\n");
         printf("\nQual camada voce deseja girar? ");
 
         scanf(" %c", &opcao);
@@ -189,7 +191,7 @@ int main()
                 GirarAntiHorario(matriz, 2);
                 break;
         }
-    }
+    } while (opcao != 's');
 
     return 0;
 }

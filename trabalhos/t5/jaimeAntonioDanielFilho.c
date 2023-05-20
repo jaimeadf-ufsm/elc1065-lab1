@@ -10,16 +10,42 @@ void Limpar()
     system("clear || cls");
 }
 
+void PreencherMatriz(char matriz[TAMANHO][TAMANHO])
+{
+    for (int i = 0; i < TAMANHO; i++)
+    {
+        for (int j = 0; j < TAMANHO; j++)
+        {
+            matriz[i][j] = '.';
+        }
+    }
+
+    matriz[0][0] = '0';
+    matriz[0][6] = 'X';
+    matriz[6][0] = 'X';
+    matriz[6][6] = '0';
+    
+    matriz[1][1] = 'X';
+    matriz[1][5] = '0';
+    matriz[5][1] = '0';
+    matriz[5][5] = 'X';
+
+    matriz[2][3] = '0';
+    matriz[3][2] = 'X';
+    matriz[3][4] = 'X';
+    matriz[4][3] = '0';
+}
+
 void ImprimirMatriz(char matriz[TAMANHO][TAMANHO])
 {
     for (int i = 0; i < TAMANHO; i++)
     {
         for (int j = 0; j < TAMANHO; j++)
         {
-            printf(" %c ", matriz[i][j]);
+            printf("  %c  ", matriz[i][j]);
         }
 
-        printf("\n");
+        printf("\n\n");
     }
 }
 
@@ -125,17 +151,11 @@ bool VerificarX(char matriz[TAMANHO][TAMANHO])
 
 int main()
 {   
-    char matriz[TAMANHO][TAMANHO] = {
-        { '0', '.', '.', '.', '.', '.', 'X' },
-        { '.', 'X', '.', '.', '.', '0', '.' },
-        { '.', '.', '.', '0', '.', '.', '.' },
-        { '.', '.', 'X', '.', 'X', '.', '.' },
-        { '.', '.', '.', '0', '.', '.', '.' },
-        { '.', '0', '.', '.', '.', 'X', '.' },
-        { 'X', '.', '.', '.', '.', '.', '0' }
-    };
+    char matriz[TAMANHO][TAMANHO];
 
     char opcao;
+
+    PreencherMatriz(matriz);
 
     do
     {

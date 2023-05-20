@@ -153,6 +153,7 @@ int main()
 {   
     char matriz[TAMANHO][TAMANHO];
 
+    bool erro = false;
     char opcao;
 
     PreencherMatriz(matriz);
@@ -164,21 +165,29 @@ int main()
 
         if (VerificarCruz(matriz))
         {
-            printf("Cruz desenhada.\n");
+            printf("Cruz desenhada.");
         }
         else if (VerificarX(matriz))
         {
-            printf("X desenhado.\n");
+            printf("X desenhado.");
         }
         
-        printf("\nCamadas:\n");
+        printf("\n\nCamadas:\n");
         printf("1) Gira no sentido anti-horario.\n");
         printf("2) Gira no sentido horario.\n");
         printf("3) Gira no sentido anti-horario.\n");
         printf("s) Sair\n");
+
+        if (erro)
+        {
+            printf("\nOpcao invalida.\n");
+        }
+
         printf("\nQual camada voce deseja girar? ");
 
         scanf(" %c", &opcao);
+
+        erro = false;
 
         switch (opcao)
         {
@@ -190,6 +199,9 @@ int main()
                 break;
             case '3':
                 GirarAntiHorario(matriz, 2);
+                break;
+            default:
+                erro = true;
                 break;
         }
     } while (opcao != 's');

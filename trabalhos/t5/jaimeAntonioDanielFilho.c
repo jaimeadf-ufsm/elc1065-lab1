@@ -20,20 +20,20 @@ void PreencherMatriz(char matriz[TAMANHO][TAMANHO])
         }
     }
 
-    matriz[0][0] = '0';
+    matriz[0][0] = 'O';
     matriz[0][6] = 'X';
     matriz[6][0] = 'X';
-    matriz[6][6] = '0';
+    matriz[6][6] = 'O';
     
     matriz[1][1] = 'X';
-    matriz[1][5] = '0';
-    matriz[5][1] = '0';
+    matriz[1][5] = 'O';
+    matriz[5][1] = 'O';
     matriz[5][5] = 'X';
 
-    matriz[2][3] = '0';
+    matriz[2][3] = 'O';
     matriz[3][2] = 'X';
     matriz[3][4] = 'X';
-    matriz[4][3] = '0';
+    matriz[4][3] = 'O';
 }
 
 void ImprimirMatriz(char matriz[TAMANHO][TAMANHO])
@@ -176,7 +176,7 @@ int main()
         printf("1) Gira no sentido anti-horario.\n");
         printf("2) Gira no sentido horario.\n");
         printf("3) Gira no sentido anti-horario.\n");
-        printf("s) Sair\n");
+        printf("0) Sair\n");
 
         if (erro)
         {
@@ -204,7 +204,7 @@ int main()
                 erro = true;
                 break;
         }
-    } while (opcao != 's');
+    } while (opcao != '0');
 
     return 0;
 }
